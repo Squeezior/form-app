@@ -9,7 +9,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <Card>
+    <div>
       <div>
         <ul></ul>
       </div>
@@ -21,7 +21,7 @@ const SearchBar = (props) => {
         onChange={inputChangeHandler}
         value={props.searchInput}
       ></input>
-    </Card>
+    </div>
   );
 };
 
