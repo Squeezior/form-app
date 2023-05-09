@@ -1,5 +1,3 @@
-import { useState } from "react";
-import Card from "./UI/Card";
 import "./SearchBar.module.css";
 
 const SearchBar = (props) => {

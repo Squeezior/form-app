@@ -10,7 +10,9 @@ const UserList = (props) => {
   let filteredUsers =
     searchInput.length > 0
       ? props.users
-          .filter((user) => user.name.toLowerCase().match(searchInput))
+          .filter((user) =>
+            user.name.toLowerCase().match(searchInput.toLowerCase())
+          )
           .map((user) => (
             <li key={user.id}>
               {user.name} {user.age}
