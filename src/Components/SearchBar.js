@@ -3,22 +3,10 @@ import Card from "./UI/Card";
 import "./SearchBar.module.css";
 
 const SearchBar = (props) => {
-  const [searchInput, setSearchInput] = useState("");
-
   const inputChangeHandler = (e) => {
     e.preventDefault();
-    setSearchInput(e.target.value);
+    props.setSearchState(e.target.value);
   };
-
-  props.onFilter(searchInput);
-
-  //   props.onFilter(searchInput);
-
-  //   userList.map((user) => (
-  //     <li key={user.id}>
-  //       {user.name} {user.age}
-  //     </li>
-  //   ));
 
   return (
     <Card>
@@ -31,23 +19,8 @@ const SearchBar = (props) => {
         type="text"
         placeholder="Search here"
         onChange={inputChangeHandler}
-        value={searchInput}
+        value={props.searchInput}
       ></input>
-      {
-        // <ul>
-        //   {searchInput.length > 0
-        //     ? filteredList.map((user) => (
-        //         <li key={user.id}>
-        //           {user.name} {user.age}
-        //         </li>
-        //       ))
-        //     : userList.map((user) => (
-        //         <li key={user.id}>
-        //           {user.name} {user.age}
-        //         </li>
-        //       ))}
-        // </ul>
-      }
     </Card>
   );
 };
