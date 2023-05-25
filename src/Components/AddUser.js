@@ -1,34 +1,49 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from 'react';
 
-import Card from "./UI/Card";
-import Button from "./UI/Button";
-import ErrorModal from "./UI/ErrorModal";
-import styles from "./AddUser.module.css";
+import Card from './UI/Card';
+import Button from './UI/Button';
+import ErrorModal from './UI/ErrorModal';
+import styles from './AddUser.module.css';
 
 const AddUser = (props) => {
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
+  const [username, setUsername] = useState('');
+  const [age, setAge] = useState('');
   const [error, setError] = useState();
+
+  const inputUserRef = useRef();
+  const inputAgeRef = useRef();
+
+  useEffect(() => {
+    inputUserRef.current.focus();
+  }, []);
 
   const addUserHandler = (event) => {
     event.preventDefault();
-    if (username.trim().length === 0 || age.trim().length === 0) {
+    if (username.trim().length === 0) {
       setError({
-        title: "Invalid input",
-        message: "Please enter a valid name and age (non-empty values).",
+        title: 'Invalid input',
+        message: 'Please enter a valid name (non-empty values).',
+      });
+      return;
+    }
+    if (age.trim().length === 0) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid age (non-empty values).',
       });
       return;
     }
     if (+age < 1) {
       setError({
-        title: "Invalid input",
-        message: "Please enter a valid age (> 0).",
+        title: 'Invalid input',
+        message: 'Please enter a valid age (> 0).',
       });
       return;
     }
     props.onAddUser(username, age);
-    setUsername("");
-    setAge("");
+    setUsername('');
+    setAge('');
+    inputUserRef.current.focus();
   };
 
   const usernameChangeHandler = (event) => {
@@ -41,6 +56,13 @@ const AddUser = (props) => {
 
   const errorHandler = () => {
     setError(null);
+    if (username.trim().length === 0) {
+      inputUserRef.current.focus();
+    } else if (age.trim().length === 0) {
+      inputAgeRef.current.focus();
+    } else {
+      inputAgeRef.current.focus();
+    }
   };
 
   return (
@@ -54,21 +76,23 @@ const AddUser = (props) => {
       )}
       <Card className={styles.input}>
         <form onSubmit={addUserHandler}>
-          <label htmlFor="username">User Name</label>
+          <label htmlFor='username'>User Name</label>
           <input
-            id="username"
-            type="text"
+            id='username'
+            type='text'
             value={username}
             onChange={usernameChangeHandler}
+            ref={inputUserRef}
           />
-          <label htmlFor="age">Age</label>
+          <label htmlFor='age'>Age</label>
           <input
-            id="age"
-            type="number"
+            id='age'
+            type='number'
             value={age}
             onChange={ageChangeHandler}
+            ref={inputAgeRef}
           />
-          <Button type="submit">Confirm</Button>
+          <Button type='submit'>Confirm</Button>
         </form>
       </Card>
     </div>
